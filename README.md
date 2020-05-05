@@ -1,5 +1,9 @@
 # 管理画面App
 
+## 構成
+
+FastAPI + MySQL8
+
 ## セットアップ
 
 ```bash
@@ -11,7 +15,7 @@ docker-compose up
 ```
 
 ```bash
-# db接続
+# db接続確認
 mysql -u user -h 127.0.0.1 -D sample_db -p
 # password
 ```

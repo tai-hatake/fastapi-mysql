@@ -7,11 +7,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     tty: true
+    env_file:
+      - .env
     environment:
-      MYSQL_DATABASE: sample_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password # ユーザのパスワード
-      MYSQL_ROOT_PASSWORD: password # ルートパスワード
       PGDATA: /var/lib/mysql
     ports:
       - "3306:3306"
@@ -41,8 +39,6 @@ services:
     environment:
       - SERVER_NAME=${DOMAIN}
       - SERVER_HOST=https://${DOMAIN}
-      # Allow explicit env var override for tests
-      - SMTP_HOST=${SMTP_HOST}
 
 volumes:
   app-db-data:
