@@ -1,0 +1,52 @@
+version: "3.3"
+services:
+  db:
+    container_name: "db"
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password # ユーザのパスワード
+      MYSQL_ROOT_PASSWORD: password # ルートパスワード
+      PGDATA: /var/lib/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - app-db-data:/var/lib/mysql
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/log:/var/log/mysql
+    networks:
+      - local-net
+
+  backend:
+    container_name: "api"
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+    volumes:
+      - .:/app
+    networks:
+      - local-net
+    env_file:
+      - .env
+    environment:
+      - SERVER_NAME=${DOMAIN}
+      - SERVER_HOST=https://${DOMAIN}
+      # Allow explicit env var override for tests
+      - SMTP_HOST=${SMTP_HOST}
+
+volumes:
+  app-db-data:
+
+networks:
+  local-net:
+    driver: bridge
