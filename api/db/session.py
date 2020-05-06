@@ -1,6 +1,6 @@
 import os
+from typing import Generator
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
@@ -32,7 +32,9 @@ session = scoped_session(
     )
 )
 
-# modelで使用する
-Base = declarative_base()
-# DB接続用のセッションクラス、インスタンスが作成されると接続する
-Base.query = session.query_property()
+
+def get_db() -> Generator:
+    try:
+        return session
+    finally:
+        session.close()
