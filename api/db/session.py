@@ -1,13 +1,12 @@
-import os
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from api.config import settings
 
-
-user_name = os.getenv('MYSQL_USER')
-password = os.getenv('MYSQL_PASSWORD')
-host = os.getenv('DOCKER_DB_HOST')
-database_name = os.getenv('MYSQL_DATABASE')
+user_name = settings.mysql_user
+password = settings.mysql_password
+host = settings.docker_db_host
+database_name = settings.mysql_database
 
 DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     user_name,
@@ -19,7 +18,7 @@ DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
 engine = create_engine(
     DATABASE,
     pool_pre_ping=True,
-    encoding="utf-8",
+    encoding='utf-8',
     echo=True
 )
 
