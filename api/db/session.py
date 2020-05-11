@@ -21,17 +21,9 @@ engine = create_engine(
     encoding='utf-8',
     echo=True
 )
+sessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
-def get_db() -> Generator:
-    try:
-        session = scoped_session(
-            # ORM実行時の設定。自動コミットするか、自動反映するか
-            sessionmaker(
-                autocommit=False,
-                autoflush=False,
-                bind=engine
-            )
-        )
-        return session
-    finally:
-        session.close()
