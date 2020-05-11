@@ -11,6 +11,9 @@ class UserCreate(UserBase):
     email: EmailStr
     password: str
 
+class UserUpdate(UserBase):
+    password: Optional[str] = None
+
 class UserInDBBase(UserBase):
     id: Optional[int] = None
 
@@ -19,3 +22,7 @@ class UserInDBBase(UserBase):
 
 class User(UserInDBBase):
     pass
+
+# Additional properties stored in DB
+class UserInDB(UserInDBBase):
+    hashed_password: str

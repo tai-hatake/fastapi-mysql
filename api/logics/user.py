@@ -1,9 +1,9 @@
 from typing import Optional
 from api import models, schemas
-from api.security import verify_password
-from api.security import get_password_hash
+from api.security import verify_password, get_password_hash
+from api.logics.base import CRUDBase
 
-class User():
+class User(CRUDBase[models.User, schemas.UserCreate,schemas.UserUpdate]):
     def create(self, db, *, obj_in: schemas.UserCreate) -> models.User:
         db_obj = models.User(
             email=obj_in.email,
@@ -30,4 +30,4 @@ class User():
     def is_active(self, user: models.User) -> bool:
         return user.is_active
 
-user = User()
+user = User(models.User)
