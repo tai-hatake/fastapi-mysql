@@ -3,7 +3,7 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from api.common import get_db
 from api import models, schemas, logics
-from api.config import settings
+from api.config import get_settings
 from sqlalchemy.orm import Session
 
 router = APIRouter()

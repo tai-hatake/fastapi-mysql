@@ -3,7 +3,7 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, Body
 from fastapi.security import OAuth2PasswordRequestForm
 from api import schemas, models, logics
-from api.config import settings
+from api.config import get_settings
 from api.security import create_access_token, verify_password
 from api.utils import generate_password_reset_token, verify_password_reset_token, send_reset_password_email
 from api.common import get_db, get_current_user

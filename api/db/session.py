@@ -1,12 +1,12 @@
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from api.config import settings
+from api.config import get_settings
 
-user_name = settings.MYSQL_USER
-password = settings.MYSQL_PASSWORD
-host = settings.DOCKER_DB_HOST
-database_name = settings.MYSQL_DATABASE
+user_name = get_settings().MYSQL_USER
+password = get_settings().MYSQL_PASSWORD
+host = get_settings().DOCKER_DB_HOST
+database_name = get_settings().MYSQL_DATABASE
 
 DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     user_name,
